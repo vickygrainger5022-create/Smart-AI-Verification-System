@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能AI鉴证系统 - 专业文档与图像真实性验证解决方案</title>
+    <script src="https://cdn.tailwindcss.com/3.3.3"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.5.0/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Noto Sans SC', 'Segoe UI', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            overflow-x: hidden;
+        }
+        
+        .bg-gradient-blue {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+        }
+        
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 28px rgba(31, 38, 135, 0.15);
+        }
+        
+        .nav-item {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #3b82f6;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-item:hover::after, .nav-item.active::after {
+            width: 100%;
+        }
+        
+        .nav-item:hover, .nav-item.active {
+            color: #3b82f6;
+        }
+        
+        .tech-highlight {
+            background-color: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid #3b82f6;
+            padding: 12px 16px;
+            margin: 16px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .mermaid-container {
+            width: 100%;
+            overflow-x: auto;
+            background-color: white;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .performance-metric {
+            display: inline-block;
+            background-color: #eff6ff;
+            color: #1e40af;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 500;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #eff6ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #3b82f6;
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+        
+        /* 移动端菜单样式 */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            max-width: 300px;
+            height: 100vh;
+            background: white;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            transition: right 0.3s ease;
+            z-index: 1000;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .mobile-menu.active {
+            right: 0;
+        }
+        
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+            z-index: 999;
+        }
+        
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* 视频播放器样式 */
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        #demoVideo {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        /* 动画效果 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+        .delay-500 { animation-delay: 0.5s; }
+        
+        /* 滚动动画 */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 技术优势卡片 */
+        .advantage-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .advantage-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+        
+        .advantage-card i {
+            font-size: 32px;
+            color: #3b82f6;
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="bg-white shadow-md fixed w-full z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <i class="fas fa-shield-alt text-blue-600 text-2xl mr-2"></i>
+                    <span class="text-xl font-bold text-gray-800">智能AI鉴证系统</span>
+                </div>
+                
+                <!-- 桌面端导航 -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="#overview" class="nav-item text-gray-600 hover:text-blue-600 font-medium">系统概览</a>
+                    <a href="#module1" class="nav-item text-gray-600 hover:text-blue-600 font-medium">图像分类</a>
+                    <a href="#module2" class="nav-item text-gray-600 hover:text-blue-600 font-medium">PS定位</a>
+                    <a href="#module3" class="nav-item text-gray-600 hover:text-blue-600 font-medium">流水检测</a>
+                    <a href="#module4" class="nav-item text-gray-600 hover:text-blue-600 font-medium">图像溯源</a>
+                    <a href="#module5" class="nav-item text-gray-600 hover:text-blue-600 font-medium">印章比对</a>
+                    <a href="#module6" class="nav-item text-gray-600 hover:text-blue-600 font-medium">摩尔纹检测</a>
+                    <a href="#demo" class="nav-item text-gray-600 hover:text-blue-600 font-medium">产品演示</a>
+                </div>
+                
+                <!-- 移动端菜单按钮 -->
+                <button class="md:hidden text-gray-600 focus:outline-none" id="mobileMenuButton">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- 移动端菜单 -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="flex justify-between items-center mb-6">
+            <span class="font-bold text-gray-800">导航菜单</span>
+            <button class="text-gray-600 focus:outline-none" id="closeMobileMenu">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+        <div class="flex flex-col space-y-4">
+            <a href="#overview" class="text-gray-600 hover:text-blue-600 py-2 border-b border-gray-100">系统概览</a>
+            <a href="#module1" class="text-gray-600 hover:text-blue-600 py-2 border-b border-gray-100">图像分类模块</a>
+            <a href="#module2" class="text-gray-600 hover:text-blue-600 py-2 border-b border-gray-100">伪造文档PS定位模块</a>
+            <a href="#module3" class="text-gray-600 hover:text-blue-600 py-2 border-b border-gray-100">银行流水账单异常检测模块</a>
+            <a href="#module4" class="text-gray-600 hover:text-blue-600 py-2 border-b border-gray-100">生成图像溯源模块</a>
+            <a href="#module5" class="text-gray-600 hover:text-blue-600 py-2 border-b border-gray-100">印章比对模块</a>
+            <a href="#module6" class="text-gray-600 hover:text-blue-600 py-2 border-b border-gray-100">摩尔纹检测模块</a>
+            <a href="#demo" class="text-gray-600 hover:text-blue-600 py-2">产品演示</a>
+        </div>
+    </div>
+    
+    <!-- 移动端菜单遮罩 -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    
+    <!-- 首页Banner -->
+    <header class="bg-gradient-blue text-white pt-32 pb-20">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6 fade-in-up">智能AI鉴证系统</h1>
+                <p class="text-xl md:text-2xl mb-8 opacity-90 fade-in-up delay-100">集成多种文档与图像检测功能的解决方案，提供高效、准确的文档真实性验证与图像分析服务</p>
+                <div class="flex flex-wrap justify-center gap-4 fade-in-up delay-200">
+                    <a href="#overview" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-medium hover:bg-blue-50 transition-colors">了解系统</a>
+                    <a href="#demo" class="bg-blue-700 text-white px-8 py-3 rounded-lg font-medium hover:bg-blue-800 transition-colors">观看演示</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- 系统概览 -->
+    <section id="overview" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center mb-16 scroll-reveal">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">系统概述</h2>
+                <p class="text-gray-600 text-lg">智能AI鉴证系统是一个集成多种文档与图像检测功能的解决方案，包含六大核心模块，旨在提供高效、准确的文档真实性验证与图像分析服务。</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="advantage-card scroll-reveal">
+                    <i class="fas fa-brain"></i>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-800">先进AI技术</h3>
+                    <p class="text-gray-600">采用深度学习、计算机视觉和模式识别等前沿技术，实现高精度、高效率的文档与图像检测。</p>
+                </div>
+                
+                <div class="advantage-card scroll-reveal" style="transition-delay: 0.1s;">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-800">全面风险防控</h3>
+                    <p class="text-gray-600">覆盖多种文档与图像伪造手段的检测能力，为各类应用场景提供全方位的风险防控保障。</p>
+                </div>
+                
+                <div class="advantage-card scroll-reveal" style="transition-delay: 0.2s;">
+                    <i class="fas fa-bolt"></i>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-800">高效便捷</h3>
+                    <p class="text-gray-600">优化的算法设计和工程实现，确保系统在保持高准确率的同时，提供极速的处理速度。</p>
+                </div>
+                
+                <div class="advantage-card scroll-reveal" style="transition-delay: 0.3s;">
+                    <i class="fas fa-code-branch"></i>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-800">模块化设计</h3>
+                    <p class="text-gray-600">六大核心功能模块可独立部署或组合使用，灵活适应不同的业务需求和应用场景。</p>
+                </div>
+                
+                <div class="advantage-card scroll-reveal" style="transition-delay: 0.4s;">
+                    <i class="fas fa-chart-line"></i>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-800">可解释性强</h3>
+                    <p class="text-gray-600">提供详细的检测结果和分析报告，帮助用户理解系统的判断依据和推理过程。</p>
+                </div>
+                
+                <div class="advantage-card scroll-reveal" style="transition-delay: 0.5s;">
+                    <i class="fas fa-cogs"></i>
+                    <h3 class="text-xl font-semibold mb-3 text-gray-800">易于集成</h3>
+                    <p class="text-gray-600">提供标准化的API接口和SDK，便于与现有业务系统和工作流程无缝集成。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 核心模块展示 -->
+    
+    <!-- 图像分类模块 -->
+    <section id="module1" class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <div class="flex flex-col md:flex-row items-center mb-12 scroll-reveal">
+                    <div class="feature-icon">
+                        <i class="fas fa-images"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-800">图像分类模块</h2>
+                        <p class="text-gray-500 mt-2">自动分类自然图像和文档图像，实现高效图片预选</p>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <div class="scroll-reveal">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">功能描述</h3>
+                        <p class="text-gray-600 mb-6">该模块能够自动识别并分类输入的图像是自然图像还是文档图像，实现高效的图片预选和分流处理。通过精准的分类结果，系统可以将文档图像路由到后续的专项检测模块进行进一步分析。</p>
+                        
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">技术亮点</h3>
+                        <div class="tech-highlight">
+                            <ul class="list-disc list-inside text-gray-700 space-y-2">
+                                <li>基于色彩度、低饱和像素占比与白底像素占比三项互补指标</li>
+                                <li>轻量化筛选路由服务，适合大规模部署</li>
+                                <li>低计算资源消耗，支持边缘设备部署</li>
+                            </ul>
+                        </div>
+                        
+                        <h3 class="text-xl font-semibold mt-8 mb-4 text-gray-800">性能指标</h3>
+                        <div>
+                            <span class="performance-metric">处理速度: 0.1秒/张</span>
+                            <span class="performance-metric">准确率: 99.5%</span>
+                            <span class="performance-metric">召回率: 99.8%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="scroll-reveal" style="transition-delay: 0.2s;">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">工作流程图</h3>
+                        <div class="mermaid-container">
+                            <pre class="mermaid">
+                                flowchart TD
+                                    A[输入图像] --> B[特征提取]
+                                    B --> C{三项指标计算}
+                                    C -->|色彩度| D[阈值判断]
+                                    C -->|低饱和像素占比| D
+                                    C -->|白底像素占比| D
+                                    D -->|文档图像| E[路由至文档检测模块]
+                                    D -->|自然图像| F[结束处理]
+                                    E --> G[后续专项检测]
+                            </pre>
+                        </div>
+                        
+                        <div class="mt-8">
+                            <h3 class="text-xl font-semibold mb-4 text-gray-800">性能对比</h3>
+                            <div class="bg-white p-4 rounded-lg shadow">
+                                <canvas id="performanceChart1" width="400" height="250"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 伪造文档PS定位模块 -->
+    <section id="module2" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <div class="flex flex-col md:flex-row items-center mb-12 scroll-reveal">
+                    <div class="feature-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-800">伪造文档PS定位模块</h2>
+                        <p class="text-gray-500 mt-2">对文档图像中的篡改文本进行检测与定位，实现像素级定位结果</p>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <div class="scroll-reveal">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">功能描述</h3>
+                        <p class="text-gray-600 mb-6">该模块专门用于检测文档图像中被篡改的区域，特别是针对通过Photoshop等工具修改过的文本内容。系统能够精确识别并标记出篡改区域，实现像素级的定位结果，为文档真实性验证提供有力支持。</p>
+                        
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">技术亮点</h3>
+                        <div class="tech-highlight">
+                            <ul class="list-disc list-inside text-gray-700 space-y-2">
+                                <li>频率+视觉多模态结合检测，提升检测准确率</li>
+                                <li>基于DCT系数的频域特征提取，捕捉篡改痕迹</li>
+                                <li>多视角迭代解码器提升定位精度</li>
+                            </ul>
+                        </div>
+                        
+                        <h3 class="text-xl font-semibold mt-8 mb-4 text-gray-800">性能指标</h3>
+                        <div>
+                            <span class="performance-metric">测试速度: 3000张/秒</span>
+                            <span class="performance-metric">定位精度: 像素级</span>
+                            <span class="performance-metric">准确率: 98.7%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="scroll-reveal" style="transition-delay: 0.2s;">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">技术架构图</h3>
+                        <div class="mermaid-container">
+                            <pre class="mermaid">
+                                flowchart TD
+                                    A[输入文档图像] --> B[图像预处理]
+                                    B --> C[频域特征提取]
+                                    B --> D[视觉特征提取]
+                                    C --> E[多模态融合]
+                                    D --> E
+                                    E --> F[篡改区域检测]
+                                    F --> G[多视角迭代解码]
+                                    G --> H[像素级定位结果]
+                            </pre>
+                        </div>
+                        
+                        <div class="mt-8 bg-white p-6 rounded-lg shadow">
+                            <h3 class="text-xl font-semibold mb-4 text-gray-800">检测效果示例</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <p class="text-center text-sm text-gray-500 mb-2">原始文档</p>
+                                    <img src="https://s.coze.cn/image/QD5H8Pt7NKU/" alt="原始文档" class="w-full h-auto rounded">
+                                </div>
+                                <div>
+                                    <p class="text-center text-sm text-gray-500 mb-2">篡改定位结果</p>
+                                    <img src="https://s.coze.cn/image/SFfkrngMz74/" alt="篡改定位结果" class="w-full h-auto rounded">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 银行流水账单异常检测模块 -->
+    <section id="module3" class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <div class="flex flex-col md:flex-row items-center mb-12 scroll-reveal">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-800">银行流水账单异常检测模块</h2>
+                        <p class="text-gray-500 mt-2">基于"结构化还原，文本化推理"双阶段架构，实现从非结构化流水图像到可解释异常告警的全流程自动化处理</p>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <div class="scroll-reveal">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">功能描述</h3>
+                        <p class="text-gray-600 mb-6">该模块针对银行流水账单等财务文档，能够自动识别表格结构和文本内容，进行结构化还原，并基于预设规则和机器学习模型进行异常检测，识别可能存在的伪造或篡改行为。</p>
+                        
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">技术亮点</h3>
+                        <div class="tech-highlight">
+                            <ul class="list-disc list-inside text-gray-700 space-y-2">
+                                <li>从图像到LaTeX表格的精准语义映射</li>
+                                <li>可追溯的异常推理机制，提供解释性结果</li>
+                                <li>规则与推理解耦设计，支持动态更新检测规则</li>
+                            </ul>
+                        </div>
+                        
+                        <h3 class="text-xl font-semibold mt-8 mb-4 text-gray-800">性能指标</h3>
+                        <div>
+                            <span class="performance-metric">字符级识别准确率: ≥98%</span>
+                            <span class="performance-metric">表格结构还原率: 99.2%</span>
+                            <span class="performance-metric">异常检测准确率: 97.8%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="scroll-reveal" style="transition-delay: 0.2s;">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">流水处理流程图</h3>
+                        <div class="mermaid-container">
+                            <pre class="mermaid">
+                                flowchart TD
+                                    A[输入流水账单图像] --> B[图像预处理]
+                                    B --> C[表格结构识别]
+                                    C --> D[文本内容识别]
+                                    D --> E[LaTeX结构化还原]
+                                    E --> F[数据一致性校验]
+                                    F --> G[异常规则匹配]
+                                    G --> H[机器学习异常检测]
+                                    H --> I[异常告警与报告生成]
+                            </pre>
+                        </div>
+                        
+                        <div class="mt-8">
+                            <h3 class="text-xl font-semibold mb-4 text-gray-800">LaTeX结构还原效果</h3>
+                            <div class="bg-gray-800 text-gray-200 p-4 rounded-lg overflow-x-auto">
+                                <pre class="text-sm">
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+交易日期 & 交易时间 & 交易类型 & 交易金额 & 交易状态 \\
+\hline
+2024-01-05 & 10:23:45 & 消费 & -128.50 & 成功 \\
+2024-01-06 & 15:47:32 & 转账 & -5000.00 & 成功 \\
+2024-01-07 & 09:12:18 & 收入 & +12500.00 & 成功 \\
+2024-01-08 & 14:36:59 & 消费 & -89.90 & 成功 \\
+\hline
+\end{tabular}
+                                </pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 生成图像溯源模块 -->
+    <section id="module4" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <div class="flex flex-col md:flex-row items-center mb-12 scroll-reveal">
+                    <div class="feature-icon">
+                        <i class="fas fa-search-location"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-800">生成图像溯源模块</h2>
+                        <p class="text-gray-500 mt-2">对输入图像提取噪声特征，判断图像真实性并分类伪造类别</p>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <div class="scroll-reveal">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">功能描述</h3>
+                        <p class="text-gray-600 mb-6">该模块能够识别通过AI生成或深度伪造的图像，提取图像中的噪声特征和统计规律，判断图像的真实性并分类伪造类别。对于打击虚假信息传播和图像伪造具有重要意义。</p>
+                        
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">技术亮点</h3>
+                        <div class="tech-highlight">
+                            <ul class="list-disc list-inside text-gray-700 space-y-2">
+                                <li>噪声分离与频谱分析结合的特征提取方法</li>
+                                <li>复合学习策略（监督+无监督对比学习）</li>
+                                <li>自蒸馏类别发现机制，提升未知伪造类型的检测能力</li>
+                            </ul>
+                        </div>
+                        
+                        <h3 class="text-xl font-semibold mt-8 mb-4 text-gray-800">性能指标</h3>
+                        <div>
+                            <span class="performance-metric">测试速度: 3000张/秒</span>
+                            <span class="performance-metric">参数量: 5.9M</span>
+                            <span class="performance-metric">准确率: 99.1%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="scroll-reveal" style="transition-delay: 0.2s;">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">溯源流程图</h3>
+                        <div class="mermaid-container">
+                            <pre class="mermaid">
+                                flowchart TD
+                                    A[输入图像] --> B[图像预处理]
+                                    B --> C[噪声特征提取]
+                                    B --> D[频谱特征分析]
+                                    C --> E[特征融合]
+                                    D --> E
+                                    E --> F[真伪判断]
+                                    F -->|真实图像| G[结束处理]
+                                    F -->|伪造图像| H[伪造类别分类]
+                                    H --> I[溯源报告生成]
+                            </pre>
+                        </div>
+                        
+                        <div class="mt-8">
+                            <h3 class="text-xl font-semibold mb-4 text-gray-800">模型性能对比</h3>
+                            <div class="bg-white p-4 rounded-lg shadow">
+                                <canvas id="performanceChart2" width="400" height="250"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 印章比对模块 -->
+    <section id="module5" class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <div class="flex flex-col md:flex-row items-center mb-12 scroll-reveal">
+                    <div class="feature-icon">
+                        <i class="fas fa-stamp"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-800">印章比对模块</h2>
+                        <p class="text-gray-500 mt-2">自动对比待鉴定印章与标准印章差异，输出匹配分数</p>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <div class="scroll-reveal">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">功能描述</h3>
+                        <p class="text-gray-600 mb-6">该模块专门用于印章真伪鉴别，能够自动提取待鉴定印章和标准印章的特征，进行精确比对，计算匹配度，并可视化展示差异区域，为印章真实性验证提供科学依据。</p>
+                        
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">技术亮点</h3>
+                        <div class="tech-highlight">
+                            <ul class="list-disc list-inside text-gray-700 space-y-2">
+                                <li>三阶段印章分离比对算法，提升比对精度</li>
+                                <li>尺度检测与关键点匹配结合，适应不同拍摄条件</li>
+                                <li>差异区域可视化呈现，直观展示比对结果</li>
+                            </ul>
+                        </div>
+                        
+                        <h3 class="text-xl font-semibold mt-8 mb-4 text-gray-800">性能指标</h3>
+                        <div>
+                            <span class="performance-metric">处理速度: 0.5秒/张</span>
+                            <span class="performance-metric">匹配准确率: 99.3%</span>
+                            <span class="performance-metric">抗干扰能力: 强</span>
+                        </div>
+                    </div>
+                    
+                    <div class="scroll-reveal" style="transition-delay: 0.2s;">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">印章比对流程图</h3>
+                        <div class="mermaid-container">
+                            <pre class="mermaid">
+                                flowchart TD
+                                    A[输入文档图像] --> B[印章区域检测]
+                                    B --> C[印章图像提取]
+                                    C --> D[预处理与归一化]
+                                    D --> E[特征提取]
+                                    E --> F[与标准印章比对]
+                                    F --> G[相似度计算]
+                                    G --> H[差异区域分析]
+                                    H --> I[比对结果可视化]
+                            </pre>
+                        </div>
+                        
+                        <div class="mt-8 bg-white p-6 rounded-lg shadow">
+                            <h3 class="text-xl font-semibold mb-4 text-gray-800">相似度可视化结果</h3>
+                            <div class="grid grid-cols-3 gap-4">
+                                <div>
+                                    <p class="text-center text-sm text-gray-500 mb-2">标准印章</p>
+                                    <img src="https://s.coze.cn/image/FWl9EekoSBE/" alt="标准印章" class="w-full h-auto rounded">
+                                </div>
+                                <div>
+                                    <p class="text-center text-sm text-gray-500 mb-2">待鉴定印章</p>
+                                    <img src="https://s.coze.cn/image/Yk1JYl6hH3E/" alt="待鉴定印章" class="w-full h-auto rounded">
+                                </div>
+                                <div>
+                                    <p class="text-center text-sm text-gray-500 mb-2">比对结果</p>
+                                    <img src="https://s.coze.cn/image/kK2Jsi3RxaA/" alt="比对结果" class="w-full h-auto rounded">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 摩尔纹检测模块 -->
+    <section id="module6" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <div class="flex flex-col md:flex-row items-center mb-12 scroll-reveal">
+                    <div class="feature-icon">
+                        <i class="fas fa-wave-square"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-800">摩尔纹检测模块</h2>
+                        <p class="text-gray-500 mt-2">自动识别图像中由非自然因素导致的周期性伪影（摩尔纹）</p>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <div class="scroll-reveal">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">功能描述</h3>
+                        <p class="text-gray-600 mb-6">该模块专门用于检测图像中由扫描或翻拍等非自然因素导致的摩尔纹伪影，通过分析图像的局部像素关联性，捕捉周期性特征，有效识别经过二次处理的文档图像。</p>
+                        
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">技术亮点</h3>
+                        <div class="tech-highlight">
+                            <ul class="list-disc list-inside text-gray-700 space-y-2">
+                                <li>基于局部像素关联的源无关性检测方法</li>
+                                <li>捕捉像素差周期性特征，不受图像内容影响</li>
+                                <li>高效的频域分析算法，支持实时处理</li>
+                            </ul>
+                        </div>
+                        
+                        <h3 class="text-xl font-semibold mt-8 mb-4 text-gray-800">性能指标</h3>
+                        <div>
+                            <span class="performance-metric">准确率: 97.5%</span>
+                            <span class="performance-metric">处理速度: 720张/秒</span>
+                            <span class="performance-metric">召回率: 98.3%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="scroll-reveal" style="transition-delay: 0.2s;">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">技术原理示意图</h3>
+                        <div class="mermaid-container">
+                            <pre class="mermaid">
+                                flowchart TD
+                                    A[输入图像] --> B[图像分块处理]
+                                    B --> C[局部像素关联分析]
+                                    C --> D[周期性特征提取]
+                                    D --> E[频域变换]
+                                    E --> F[摩尔纹模式识别]
+                                    F --> G[检测结果输出]
+                            </pre>
+                        </div>
+                        
+                        <div class="mt-8 bg-white p-6 rounded-lg shadow">
+                            <h3 class="text-xl font-semibold mb-4 text-gray-800">摩尔纹检测效果</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <p class="text-center text-sm text-gray-500 mb-2">原始图像</p>
+                                    <img src="https://s.coze.cn/image/0kVJuFYJ9bk/" alt="原始图像" class="w-full h-auto rounded">
+                                </div>
+                                <div>
+                                    <p class="text-center text-sm text-gray-500 mb-2">检测结果</p>
+                                    <img src="https://s.coze.cn/image/ZbOFkH7KoTA/" alt="检测结果" class="w-full h-auto rounded">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 产品演示区 -->
+    <section id="demo" class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center mb-12 scroll-reveal">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">产品效果演示</h2>
+                <p class="text-gray-600 text-lg">观看系统功能演示视频</p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto text-center scroll-reveal">
+                <div class="video-container">
+                    <video id="demoVideo" width="800" height="450" controls poster="https://s.coze.cn/image/qMwu16DBiI0/">
+                        <source src="https://raw.githubusercontent.com/Scaling-waffle/Scaling-waffle/main/system_video.mp4" type="video/mp4">
+                        您的浏览器不支持HTML5视频播放
+                    </video>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 技术优势总结 -->
+    <section class="py-20 bg-gradient-blue text-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center mb-12 scroll-reveal">
+                <h2 class="text-3xl font-bold mb-6">技术优势与应用场景</h2>
+                <p class="text-lg opacity-90">智能AI鉴证系统凭借其先进的技术和全面的功能，在多个领域具有广泛的应用前景</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div class="bg-white/10 backdrop-blur-md p-6 rounded-lg hover:bg-white/20 transition-colors scroll-reveal">
+                    <i class="fas fa-university text-3xl mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-3">金融风控</h3>
+                    <p class="opacity-90">银行、保险等金融机构用于审核贷款申请材料、保单真实性验证、交易凭证审核等场景，有效防范金融欺诈风险。</p>
+                </div>
+                
+                <div class="bg-white/10 backdrop-blur-md p-6 rounded-lg hover:bg-white/20 transition-colors scroll-reveal" style="transition-delay: 0.1s;">
+                    <i class="fas fa-briefcase text-3xl mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-3">企业合规</h3>
+                    <p class="opacity-90">各类企业用于合同审核、供应商资质验证、员工证明材料审核等场景，确保业务合规性和材料真实性。</p>
+                </div>
+                
+                <div class="bg-white/10 backdrop-blur-md p-6 rounded-lg hover:bg-white/20 transition-colors scroll-reveal" style="transition-delay: 0.2s;">
+                    <i class="fas fa-gavel text-3xl mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-3">司法取证</h3>
+                    <p class="opacity-90">司法机关用于电子证据真实性鉴定、文档篡改检测、图像真伪鉴别等场景，为案件调查和审判提供科学依据。</p>
+                </div>
+                
+                <div class="bg-white/10 backdrop-blur-md p-6 rounded-lg hover:bg-white/20 transition-colors scroll-reveal" style="transition-delay: 0.3s;">
+                    <i class="fas fa-building text-3xl mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-3">政务服务</h3>
+                    <p class="opacity-90">政府部门用于各类证件审核、材料真实性验证、电子政务文件鉴别等场景，提高政务服务效率和准确性。</p>
+                </div>
+                
+                <div class="bg-white/10 backdrop-blur-md p-6 rounded-lg hover:bg-white/20 transition-colors scroll-reveal" style="transition-delay: 0.4s;">
+                    <i class="fas fa-shopping-cart text-3xl mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-3">电商平台</h3>
+                    <p class="opacity-90">电商平台用于商家资质审核、商品描述真实性验证、交易凭证审核等场景，维护平台交易秩序和消费者权益。</p>
+                </div>
+                
+                <div class="bg-white/10 backdrop-blur-md p-6 rounded-lg hover:bg-white/20 transition-colors scroll-reveal" style="transition-delay: 0.5s;">
+                    <i class="fas fa-id-card text-3xl mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-3">身份验证</h3>
+                    <p class="opacity-90">各类需要身份验证的场景，如远程开户、在线考试、数字身份认证等，确保用户身份真实性和材料完整性。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 联系/反馈区 -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center mb-12 scroll-reveal">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">联系与反馈</h2>
+                <p class="text-gray-600 text-lg">如有任何问题或建议，欢迎与我们联系</p>
+            </div>
+            
+            <div class="max-w-xl mx-auto bg-white p-8 rounded-lg shadow-md scroll-reveal">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-4">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <p class="text-gray-500 text-sm">邮箱</p>
+                            <p class="font-medium">contact@ai-verification.com</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-4">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div>
+                            <p class="text-gray-500 text-sm">电话</p>
+                            <p class="font-medium">400-123-4567</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 页脚 -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div>
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-shield-alt text-blue-400 text-2xl mr-2"></i>
+                            <span class="text-xl font-bold">智能AI鉴证系统</span>
+                        </div>
+                        <p class="text-gray-400 mb-4">专业的文档与图像真实性验证解决方案，为您的业务安全保驾护航。</p>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-github"></i></a>
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">产品中心</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#module1" class="text-gray-400 hover:text-white transition-colors">图像分类模块</a></li>
+                            <li><a href="#module2" class="text-gray-400 hover:text-white transition-colors">PS定位模块</a></li>
+                            <li><a href="#module3" class="text-gray-400 hover:text-white transition-colors">流水检测模块</a></li>
+                            <li><a href="#module4" class="text-gray-400 hover:text-white transition-colors">图像溯源模块</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">解决方案</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">金融行业</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">司法领域</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">政务服务</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">企业合规</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">关于我们</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">公司简介</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">技术团队</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">新闻动态</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">联系我们</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="border-t border-gray-700 mt-12 pt-8 text-center text-gray-500">
+                    <p>© 2025 智能AI鉴证系统. 保留所有权利.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // 移动端菜单
+        document.getElementById('mobileMenuButton').addEventListener('click', function() {
+            document.getElementById('mobileMenu').classList.add('active');
+            document.getElementById('mobileMenuOverlay').classList.add('active');
+        });
+        
+        document.getElementById('closeMobileMenu').addEventListener('click', function() {
+            document.getElementById('mobileMenu').classList.remove('active');
+            document.getElementById('mobileMenuOverlay').classList.remove('active');
+        });
+        
+        document.getElementById('mobileMenuOverlay').addEventListener('click', function() {
+            document.getElementById('mobileMenu').classList.remove('active');
+            document.getElementById('mobileMenuOverlay').classList.remove('active');
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // 关闭移动端菜单
+                    document.getElementById('mobileMenu').classList.remove('active');
+                    document.getElementById('mobileMenuOverlay').classList.remove('active');
+                }
+            });
+        });
+        
+        // 滚动动画
+        function handleScrollAnimation() {
+            const elements = document.querySelectorAll('.scroll-reveal');
+            
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', handleScrollAnimation);
+        window.addEventListener('load', handleScrollAnimation);
+        
+        // 图表初始化
+        window.addEventListener('load', function() {
+            // 图像分类模块性能对比图表
+            const ctx1 = document.getElementById('performanceChart1');
+            if (ctx1) {
+                new Chart(ctx1, {
+                    type: 'bar',
+                    data: {
+                        labels: ['本系统', '传统方法A', '传统方法B', '传统方法C'],
+                        datasets: [{
+                            label: '处理速度 (秒/张)',
+                            data: [0.1, 0.5, 0.8, 1.2],
+                            backgroundColor: [
+                                'rgba(59, 130, 246, 0.8)',
+                                'rgba(156, 163, 175, 0.6)',
+                                'rgba(156, 163, 175, 0.6)',
+                                'rgba(156, 163, 175, 0.6)'
+                            ],
+                            borderColor: [
+                                'rgb(59, 130, 246)',
+                                'rgb(156, 163, 175)',
+                                'rgb(156, 163, a175)',
+                                'rgb(156, 163, 175)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: '处理速度 (秒/张)'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // 生成图像溯源模块性能对比图表
+            const ctx2 = document.getElementById('performanceChart2');
+            if (ctx2) {
+                new Chart(ctx2, {
+                    type: 'radar',
+                    data: {
+                        labels: ['准确率', '召回率', 'F1分数', '处理速度', '模型大小'],
+                        datasets: [{
+                            label: '本系统',
+                            data: [99.1, 98.5, 98.8, 95, 90],
+                            fill: true,
+                            backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                            borderColor: 'rgb(59, 130, 246)',
+                            pointBackgroundColor: 'rgb(59, 130, 246)',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: 'rgb(59, 130, 246)'
+                        }, {
+                            label: '对比方法',
+                            data: [85, 82, 83.5, 70, 65],
+                            fill: true,
+                            backgroundColor: 'rgba(156, 163, 175, 0.2)',
+                            borderColor: 'rgb(156, 163, 175)',
+                            pointBackgroundColor: 'rgb(156, 163, 175)',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: 'rgb(156, 163, 175)'
+                        }]
+                    },
+                    options: {
+                        elements: {
+                            line: {
+                                borderWidth: 3
+                            }
+                        },
+                        scales: {
+                            r: {
+                                angleLines: {
+                                    display: true
+                                },
+                                suggestedMin: 50,
+                                suggestedMax: 100
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // Mermaid图表初始化
+            mermaid.initialize({ startOnLoad: true });
+        });
+    </script>
+</body>
+</html>
